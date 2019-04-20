@@ -1,12 +1,16 @@
 <template>
     <div class="ebook">
-      aaa
+      <ebook-reader></ebook-reader>
     </div>
 </template>
 
 <script>
+  import EbookReader from '../../components/ebook/EbookReader.vue'
     export default {
-        name: "Ebook"
+      name: "Ebook",
+      components: {
+        EbookReader
+      }
     }
 </script>
 
