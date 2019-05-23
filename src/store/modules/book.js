@@ -8,7 +8,7 @@ const book = {
     }
   },
   actions: {
-    setFileName: ({commit}, fileName) => {
+    setFileName: ({ commit }, fileName) => {
       return commit('SET_FILENAME', fileName)
     }
   }

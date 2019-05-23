@@ -16,8 +16,11 @@
         ])
       },
       methods: {
+        prevPage () {},
+        nextPage () {},
+        toggleMenu () {},
         initEpub () {
-          const url = 'http://192.168.1.101:8889/epub/' +
+          const url = 'http://192.168.5.54:8090/epub/' +
             this.fileName + '.epub'
           this.book = new Epub(url)
           this.rendition = this.book.renderTo('read', {
@@ -26,9 +29,25 @@
             method: 'default'
           })
           this.rendition.display()
+          this.rendition.on('touchstart', event => {
+            this.touchStartX = event.changedTouches[0].clientX
+            this.touchStartTime = event.timeStamp
+          })
+          this.rendition.on('touchend', event => {
+            const offSetX = event.changedTouches[0].clientX - this.touchStartX
+            const time = event.timeStamp - this.touchStartTime
+            if (offSetX < -40 && time <= 500) {
+              this.prevPage()
+            } else if (offSetX > 40 && time <= 500) {
+              this.nextPage()
+            } else {
+              this.toggleMenu()
+            }
+          })
         }
       },
       mounted () {
+        // console.log(this.$route.params.fileName)
         this.$store.dispatch('setFileName', this.$route.params.fileName.split('|').join('/')).then(
           () => {
             this.initEpub()
