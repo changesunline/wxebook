@@ -16,8 +16,16 @@
         ])
       },
       methods: {
-        prevPage () {},
-        nextPage () {},
+        prevPage () {
+          if (this.rendition) {
+            this.rendition.prev()
+          }
+        },
+        nextPage () {
+          if (this.rendition) {
+            this.rendition.next()
+          }
+        },
         toggleMenu () {},
         initEpub () {
           const url = 'http://192.168.5.54:8090/epub/' +
@@ -36,6 +44,8 @@
           this.rendition.on('touchend', event => {
             const offSetX = event.changedTouches[0].clientX - this.touchStartX
             const time = event.timeStamp - this.touchStartTime
+            console.log(offSetX)
+            console.log(time)
             if (offSetX < -40 && time <= 500) {
               this.prevPage()
             } else if (offSetX > 40 && time <= 500) {
