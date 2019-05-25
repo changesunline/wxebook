@@ -1,6 +1,6 @@
 <template>
     <div class="ebook-reader">
-      <div id="read"></div>
+      <div id="read" @click="toggleMenu()"></div>
     </div>
 </template>
 
@@ -12,7 +12,8 @@
       name: "EbookReader",
       computed: {
         ...mapGetters([
-          'fileName'
+          'fileName',
+          'menuVisible'
         ])
       },
       methods: {
@@ -26,7 +27,9 @@
             this.rendition.next()
           }
         },
-        toggleMenu () {},
+        toggleMenu () {
+          this.$store.dispatch('setMenuVisible', !this.menuVisible)
+        },
         initEpub () {
           const url = 'http://192.168.5.54:8090/epub/' +
             this.fileName + '.epub'
@@ -47,9 +50,9 @@
             console.log(offSetX)
             console.log(time)
             if (offSetX < -40 && time <= 500) {
-              this.prevPage()
-            } else if (offSetX > 40 && time <= 500) {
               this.nextPage()
+            } else if (offSetX > 40 && time <= 500) {
+              this.prevPage()
             } else {
               this.toggleMenu()
             }
