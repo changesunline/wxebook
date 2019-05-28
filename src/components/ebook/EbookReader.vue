@@ -1,39 +1,47 @@
 <template>
     <div class="ebook-reader">
-      <div id="read" @click="toggleMenu()"></div>
+      <div id="read" @click="toggleTitleAndMenu()"></div>
     </div>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapActions } from 'vuex'
+  import { ebookmixin } from '../../util/mixin'
   import Epub from 'epubjs'
   global.epub = Epub
     export default {
       name: "EbookReader",
-      computed: {
-        ...mapGetters([
-          'fileName',
-          'menuVisible'
-        ])
-      },
+      mixins: [ebookmixin],
       methods: {
         prevPage () {
           if (this.rendition) {
             this.rendition.prev()
+            this.hideTitleAndMenu()
           }
         },
         nextPage () {
           if (this.rendition) {
             this.rendition.next()
+            this.hideTitleAndMenu()
           }
         },
-        toggleMenu () {
-          this.$store.dispatch('setMenuVisible', !this.menuVisible)
+        toggleTitleAndMenu () {
+          // this.$store.dispatch('setMenuVisible', !this.menuVisible)
+          if (this.menuVisible) {
+            this.setSettingVisible(-1)
+          }
+          this.setMenuVisible(!this.menuVisible)
+        },
+        hideTitleAndMenu () {
+          // this.$store.dispatch('setMenuVisible', false)
+          this.setMenuVisible(false)
+          this.setSettingVisible(-1)
         },
         initEpub () {
           const url = 'http://192.168.5.54:8090/epub/' +
             this.fileName + '.epub'
           this.book = new Epub(url)
+          this.setCurrentBook(this.book)
           this.rendition = this.book.renderTo('read', {
             width: innerWidth,
             height: innerHeight,
@@ -47,21 +55,19 @@
           this.rendition.on('touchend', event => {
             const offSetX = event.changedTouches[0].clientX - this.touchStartX
             const time = event.timeStamp - this.touchStartTime
-            console.log(offSetX)
-            console.log(time)
             if (offSetX < -40 && time <= 500) {
               this.nextPage()
             } else if (offSetX > 40 && time <= 500) {
               this.prevPage()
             } else {
-              this.toggleMenu()
+              this.toggleTitleAndMenu()
             }
           })
         }
       },
       mounted () {
         // console.log(this.$route.params.fileName)
-        this.$store.dispatch('setFileName', this.$route.params.fileName.split('|').join('/')).then(
+        this.setFileName(this.$route.params.fileName.split('|').join('/')).then(
           () => {
             this.initEpub()
           }
