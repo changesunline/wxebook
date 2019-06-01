@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store/index.js'
+import store from './store'
+import i18n from './lang'
 import '@/assets/styles/icon.css'
 import '@/assets/styles/global.scss'
 import '@/assets/styles/reset.scss'
-import '@/assets/fonts/daysOne.css'
 
 Vue.config.productionTip = false
 
 new Vue({
   router,
   store,
+  i18n,
   render: h => h(App)
 }).$mount('#app')

@@ -17,11 +17,13 @@
       </div>
     </transition>
     <ebook-setting-font></ebook-setting-font>
+    <ebook-setting-font-popup></ebook-setting-font-popup>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import EbookSettingFont from './EbookSettingFont'
+import EbookSettingFontPopup from './EbookSettingFontPopup'
 import { ebookmixin } from '../../util/mixin'
 export default {
   name: 'EbookMenu',
@@ -40,7 +42,8 @@ export default {
     }
   },
   components: {
-    EbookSettingFont
+    EbookSettingFont,
+    EbookSettingFontPopup
   }
 }
 </script>

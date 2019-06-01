@@ -20,7 +20,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { mapGetters } from 'vuex'
 import { ebookmixin } from '../../util/mixin'
 export default {
   name: 'EbookTitle',
