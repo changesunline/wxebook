@@ -52,6 +52,14 @@ export function saveFontSize (fileName, fontSize) {
     return setBookObject(fileName, 'fontSize', fontSize)
 }
 
+export function getTheme (fileName) {
+    return getBookObject(fileName, 'Theme')
+}
+
+export function saveTheme (fileName, theme) {
+    return setBookObject(fileName, 'Theme', theme)
+}
+
 export function getLocale () {
     return getLocalStorage('Locale')
 }

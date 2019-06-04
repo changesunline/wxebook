@@ -134,13 +134,9 @@ export default {
       @include center;
       .setting-font-family-text-wrapper {
         @include center;
-        .setting-font-family-text {
-
-        }
       }
       .setting-font-family-icon-wrapper {
         @include center;
-        .icon-forward{}
       }
     }
 }
