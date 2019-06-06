@@ -3,6 +3,9 @@
     <div class="setting-wrapper" v-show="menuVisible && settingVisible === 2">
       <div class="setting-progress">
         <div class="progress-wrapper">
+          <div class="progress-icon-wrapper">
+            <span class="icon-back" @click="prevSection()"></span>
+          </div>
           <input
             class="progress"
             type="range"
@@ -15,6 +18,9 @@
             :disabled="!bookAvailable"
             ref="progress"
           >
+          <div class="progress-icon-wrapper">
+            <span class="icon-forward" @click="nextSection()"></span>
+          </div>
         </div>
         <div class="text-wrapper">
           <span>{{bookAvailable ? progress + '%' : '加载中...'}}</span>
@@ -33,6 +39,12 @@ export default {
     return {}
   },
   methods: {
+    prevSection () {
+
+    },
+    nextSection () {
+
+    },
     onProgressChange (progress) {
       this.setProgress(progress)
     },
@@ -52,7 +64,7 @@ export default {
   left: 0;
   z-index: 101;
   width: 100%;
-  height: px2rem(60);
+  height: px2rem(80);
   background: white;
   box-shadow: 0 px2rem(-8) px2rem(8) rgba(0, 0, 0, 0.15);
   .setting-progress {
@@ -63,14 +75,17 @@ export default {
       width: 100%;
       height: 100%;
       @include center;
-      padding: 0 px2rem(30);
+      padding: 0 px2rem(15);
       box-sizing: border-box;
+      .progress-icon-wrapper {
+        font-size: px2rem(20);
+      }
       .progress {
         width: 100%;
         -webkit-appearance: none;
         height: px2rem(2);
         background: -webkit-linear-gradient(#999, #999) no-repeat, #ddd;
-        background-size: 0 100%;
+        background-size: 0 100% !important;
         &:focus {
           outline: none;
         }
