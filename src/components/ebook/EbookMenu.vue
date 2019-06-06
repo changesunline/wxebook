@@ -1,7 +1,11 @@
 <template>
   <div class="menu-bar">
     <transition name="slide-up">
-      <div class="menu-wrapper" :class="{'hide-box-shadow':!menuVisible || settingVisible >= 0}" v-show="menuVisible">
+      <div
+        class="menu-wrapper"
+        :class="{'hide-box-shadow':!menuVisible || settingVisible >= 0}"
+        v-show="menuVisible"
+      >
         <div class="icon-wrapper">
           <span class="icon-menu" @click="showAndHideSetting(3)"></span>
         </div>
@@ -19,6 +23,7 @@
     <ebook-setting-font></ebook-setting-font>
     <ebook-setting-font-popup></ebook-setting-font-popup>
     <ebook-setting-theme></ebook-setting-theme>
+    <ebook-setting-progress></ebook-setting-progress>
   </div>
 </template>
 
@@ -26,27 +31,25 @@
 import EbookSettingFont from './EbookSettingFont'
 import EbookSettingFontPopup from './EbookSettingFontPopup'
 import EbookSettingTheme from './EbookSettingTheme'
+import EbookSettingProgress from './EbookSettingProgress'
 import { ebookmixin } from '../../util/mixin'
 export default {
   name: 'EbookMenu',
-  data() {
+  data () {
     return {
     }
   },
   mixins: [ebookmixin],
   methods: {
     showAndHideSetting (key) {
-      if (this.settingVisible >= 0) {
-        this.setSettingVisible(-1)
-      } else {
-        this.setSettingVisible(key)
-      }
+      this.setSettingVisible(key)
     }
   },
   components: {
     EbookSettingFont,
     EbookSettingFontPopup,
-    EbookSettingTheme
+    EbookSettingTheme,
+    EbookSettingProgress
   }
 }
 </script>
@@ -63,7 +66,7 @@ export default {
     width: 100%;
     height: px2rem(48);
     background: white;
-    box-shadow: 0 px2rem(-8) px2rem(8) rgba(0, 0, 0, .15);
+    box-shadow: 0 px2rem(-8) px2rem(8) rgba(0, 0, 0, 0.15);
     font-size: px2rem(20);
     &.hide-box-shadow {
       box-shadow: none;

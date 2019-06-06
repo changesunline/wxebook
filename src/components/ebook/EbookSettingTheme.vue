@@ -27,7 +27,7 @@ export default {
   name: "EbookSettingTheme",
   mixins: [ebookmixin],
   methods: {
-    setTheme(index) {
+    setTheme (index) {
       const theme = this.themeList[index];
       this.setDefaultTheme(theme.name).then(() => {
         this.currentBook.rendition.themes.select(this.defaultTheme);
@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../assets/styles/global.scss";
+@import '../../assets/styles/global.scss';
 .setting-wrapper {
   position: absolute;
   bottom: px2rem(48);
