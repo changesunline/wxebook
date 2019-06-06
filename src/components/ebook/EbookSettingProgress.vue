@@ -2,6 +2,10 @@
   <transition name="slide-up">
     <div class="setting-wrapper" v-show="menuVisible && settingVisible === 2">
       <div class="setting-progress">
+        <div class="read-time-wrapper">
+          <span class="read-time-text">111</span>
+          <span class="icon-forward"></span>
+        </div>
         <div class="progress-wrapper">
           <div class="progress-icon-wrapper">
             <span class="icon-back" @click="prevSection()"></span>
@@ -64,9 +68,18 @@ export default {
   left: 0;
   z-index: 101;
   width: 100%;
-  height: px2rem(80);
+  height: px2rem(90);
   background: white;
   box-shadow: 0 px2rem(-8) px2rem(8) rgba(0, 0, 0, 0.15);
+  .read-time-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: px2rem(12);
+    width: 100%;
+    @include center;
+    height: px2rem(40);
+  }
   .setting-progress {
     position: relative;
     width: 100%;
@@ -103,7 +116,7 @@ export default {
     .text-wrapper {
       position: absolute;
       left: 0;
-      bottom: 0;
+      bottom: px2rem(10);
       width: 100%;
       color: #333;
       font-size: px2rem(12);
