@@ -50,11 +50,27 @@ export default {
 
     },
     onProgressChange (progress) {
-      this.setProgress(progress)
+      this.setProgress(progress).then(() => {
+        this.displayProgress()
+        this.updateProgressBg()
+      })
     },
     onProgressInput (progress) {
-      this.setProgress(progress)
+      this.setProgress(progress).then(() => {
+        this.updateProgressBg()
+      })
+    },
+    updateProgressBg () {
+      // this.$refs.progress.style.backgroundSize = `${this.progress}% 100%` // 无效
+      this.$refs.progress.style.cssText = `background-size: ${this.progress}% 100% !important;`
+    },
+    displayProgress () {
+      const cfi = this.currentBook.locations.cfiFromPercentage(this.progress / 100)
+      this.currentBook.rendition.display(cfi)
     }
+  },
+  updated () {
+    this.updateProgressBg()
   },
   components: {}
 }
@@ -97,8 +113,8 @@ export default {
         width: 100%;
         -webkit-appearance: none;
         height: px2rem(2);
-        background: -webkit-linear-gradient(#999, #999) no-repeat, #ddd;
-        background-size: 0 100% !important;
+        // background: -webkit-linear-gradient(#999, #999) no-repeat, #ddd;
+        // background-size: 0 100% !important;
         &:focus {
           outline: none;
         }
