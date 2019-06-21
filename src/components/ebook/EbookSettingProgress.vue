@@ -44,10 +44,31 @@ export default {
   },
   methods: {
     prevSection () {
-
+      if (this.section > 0 && this.bookAvailable) {
+        this.setSection(this.section - 1).then(() => {
+          this.displaySection()
+        })
+      }
     },
     nextSection () {
-
+      if (this.section < this.currentBook.spine.length - 1 && this.bookAvailable) {
+        this.setSection(this.section + 1).then(() => {
+          this.displaySection()
+        })
+      }
+    },
+    displaySection () {
+      const sectionInfo = this.currentBook.section(this.section)
+      if (sectionInfo && sectionInfo.href) {
+        this.currentBook.rendition.display(sectionInfo.href).then(() => {
+          this.refreshLocation()
+        })
+      }
+    },
+    refreshLocation () {
+      const currentLocation = this.currentBook.rendition.currentLocation()
+      console.log(currentLocation)
+      // const progress = this.currentBook.locations.percentageFromCfi()
     },
     onProgressChange (progress) {
       this.setProgress(progress).then(() => {
