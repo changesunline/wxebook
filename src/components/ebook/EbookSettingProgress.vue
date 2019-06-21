@@ -67,8 +67,9 @@ export default {
     },
     refreshLocation () {
       const currentLocation = this.currentBook.rendition.currentLocation()
-      console.log(currentLocation)
-      // const progress = this.currentBook.locations.percentageFromCfi()
+      // console.log(currentLocation)
+      const progress = this.currentBook.locations.percentageFromCfi(currentLocation.start.cfi)
+      this.setProgress(Math.floor(progress*100))
     },
     onProgressChange (progress) {
       this.setProgress(progress).then(() => {
