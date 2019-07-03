@@ -24,7 +24,9 @@ export default {
   methods: {
     prevPage () {
       if (this.rendition) {
-        this.rendition.prev()
+        this.rendition.prev().then(() => {
+          this.refreshLocation()
+        })
         this.hideTitleAndMenu()
       }
     },
@@ -81,6 +83,7 @@ export default {
         this.rendition.themes.select(defaultTheme)
       }
     },
+    
     initRendition () {
       this.rendition = this.book.renderTo('read', {
         width: innerWidth,

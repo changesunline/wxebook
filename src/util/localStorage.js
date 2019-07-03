@@ -67,3 +67,11 @@ export function getLocale () {
 export function saveLocale (locale) {
     return setLocalStorage('Locale', locale)
 }
+
+export function getLocation (fileName) {
+    return getBookObject(fileName, 'Location')
+}
+
+export function saveLocation (fileName, location) {
+    return setBookObject(fileName, 'Location', location)
+}
