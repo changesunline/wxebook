@@ -1,6 +1,8 @@
 <template>
   <div class="ebook-reader">
-    <div id="read" @click="toggleTitleAndMenu()"></div>
+    <div class="reader-wrapper" @click="toggleTitleAndMenu">
+      <div id="read"></div>
+    </div>
   </div>
 </template>
 
@@ -14,7 +16,8 @@ import {
   getFontSize,
   saveFontSize,
   getTheme,
-  saveTheme
+  saveTheme,
+  getLocation
 } from '../../util/localStorage'
 
 global.epub = Epub
@@ -83,7 +86,6 @@ export default {
         this.rendition.themes.select(defaultTheme)
       }
     },
-    
     initRendition () {
       this.rendition = this.book.renderTo('read', {
         width: innerWidth,
@@ -91,7 +93,8 @@ export default {
         method: 'default'
       })
       // 渲染epub，对localStorage里的缓存字体信息渲染
-      this.rendition.display().then(() => {
+      const location = getLocation(this.fileName)
+      this.display(location, () => {
         this.initFontFamily()
         this.initFontSize()
         this.initTheme()
@@ -104,7 +107,7 @@ export default {
           contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/cabin.css`),
           contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/montserrat.css`),
           contents.addStylesheet(`${process.env.VUE_APP_RES_URL}/fonts/tangerine.css`)
-        ]).then(() => {})
+        ]).then(() => { })
       })
     },
     initGesture () {
@@ -134,10 +137,11 @@ export default {
       this.initRendition()
       this.initGesture()
       this.book.ready.then(() => {
-        return this.book.locations.generate(750 * (window.innerWidth / 375) * 
-      (getFontSize(this.fileName) / 16))
+        return this.book.locations.generate(750 * (window.innerWidth / 375) *
+          (getFontSize(this.fileName) / 16))
       }).then((locations) => {
         this.setBookAvailable(true)
+        this.refreshLocation()
       })
     }
   },

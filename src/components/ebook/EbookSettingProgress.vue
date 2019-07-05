@@ -3,7 +3,7 @@
     <div class="setting-wrapper" v-show="menuVisible && settingVisible === 2">
       <div class="setting-progress">
         <div class="read-time-wrapper">
-          <span class="read-time-text">111</span>
+          <span class="read-time-text">{{getReadTimeText()}}</span>
           <span class="icon-forward"></span>
         </div>
         <div class="progress-wrapper">
@@ -21,7 +21,7 @@
             :value="progress"
             :disabled="!bookAvailable"
             ref="progress"
-          >
+          />
           <div class="progress-icon-wrapper">
             <span class="icon-forward" @click="nextSection()"></span>
           </div>
@@ -37,6 +37,8 @@
 
 <script type="text/ecmascript-6">
 import { ebookmixin } from '../../util/mixin'
+import { getReadTime } from '../../util/localStorage'
+import { setInterval } from 'timers';
 export default {
   name: 'EbookSettingProgress',
   mixins: [ebookmixin],
@@ -54,6 +56,25 @@ export default {
     return {}
   },
   methods: {
+    getReadTimeText () {
+      // console.log(this.$t('book.haveRead'))
+      let readTimeByMinutes = this.getReadTimeByMinutes()
+      setInterval(() => {
+         readTimeByMinutes = this.getReadTimeByMinutes()
+      }, 1000*30)
+      let readTimeText = this.$t('book.haveRead').replace('$1', readTimeByMinutes)
+      return readTimeText
+    },
+    getReadTimeByMinutes () {
+      let readTime = getReadTime(this.fileName)
+      let readTimeByMinutes
+      if (readTime) {
+        readTimeByMinutes = readTime / 60
+        return readTimeByMinutes
+      } else {
+        readTimeByMinutes = 0
+      }
+    },
     prevSection () {
       if (this.section > 0 && this.bookAvailable) {
         this.setSection(this.section - 1).then(() => {
@@ -94,10 +115,12 @@ export default {
     displayProgress () {
       const cfi = this.currentBook.locations.cfiFromPercentage(this.progress / 100)
       this.currentBook.rendition.display(cfi)
+      // this.refreshLocation()
     }
   },
   updated () {
     this.updateProgressBg()
+    // this.getReadTimeText()
   },
   components: {}
 }
