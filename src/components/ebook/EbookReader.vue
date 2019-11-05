@@ -39,6 +39,7 @@ export default {
         this.hideTitleAndMenu()
       }
     },
+    
     toggleTitleAndMenu () {
       // this.$store.dispatch('setMenuVisible', !this.menuVisible)
       if (this.menuVisible) {
@@ -46,12 +47,6 @@ export default {
         this.setFontFamilyVisible(false)
       }
       this.setMenuVisible(!this.menuVisible)
-    },
-    hideTitleAndMenu () {
-      // this.$store.dispatch('setMenuVisible', false)
-      this.setMenuVisible(false)
-      this.setSettingVisible(-1)
-      this.setFontFamilyVisible(false)
     },
     // 初始化字体样式
     initFontFamily () {
