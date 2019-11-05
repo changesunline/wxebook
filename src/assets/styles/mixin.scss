@@ -23,3 +23,13 @@ $fontSize: 375 / 10;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.icon {
+  color: #666;
+  font-size: px2rem(16);
+}
+.title {
+  color: #666;
+  font-size: px2rem(16);
+  font-weight: bold;
+}

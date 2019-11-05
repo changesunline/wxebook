@@ -1,17 +1,16 @@
 <template>
   <div class="search-bar">
-    <!-- <div class="search-bar-title-wrapper">
+    <div class="search-bar-title-wrapper">
       <div class="title-icon-back-wrapper">
-        <span class="icon-back"></span>
+        <span class="icon-back icon"></span>
       </div>
       <div class="title-text-wrapper">
-        <span class="title-text">{{$t('home.title')}}</span>
+        <span class="title-text title">{{$t('home.title')}}</span>
       </div>
       <div class="title-icon-shake-wrapper">
-        <span class="icon-shake"></span>
+        <span class="icon-shake icon"></span>
       </div>
-    </div> -->
-    1111111111111
+    </div>
   </div>
 </template>
 
