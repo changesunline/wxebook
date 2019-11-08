@@ -16,13 +16,12 @@ import {
   getFontSize,
   saveFontSize,
   getTheme,
-  saveTheme,
   getLocation
 } from '../../util/localStorage'
 
 global.epub = Epub
 export default {
-  name: "EbookReader",
+  name: 'EbookReader',
   mixins: [ebookmixin],
   methods: {
     prevPage () {
@@ -39,7 +38,7 @@ export default {
         this.hideTitleAndMenu()
       }
     },
-    
+
     toggleTitleAndMenu () {
       // this.$store.dispatch('setMenuVisible', !this.menuVisible)
       if (this.menuVisible) {
@@ -54,7 +53,7 @@ export default {
       if (!fontFamily) {
         saveFontFamily(this.fileName, this.defaultFontFamily)
       } else {
-        this.currentBook.rendition.themes.font(fontFamily);
+        this.currentBook.rendition.themes.font(fontFamily)
         this.setDefaultFontFamily(fontFamily)
       }
     },
@@ -64,7 +63,7 @@ export default {
       if (!fontSize) {
         saveFontSize(this.fileName, this.defaultFontSize)
       } else {
-        this.currentBook.rendition.themes.fontSize(fontSize);
+        this.currentBook.rendition.themes.fontSize(fontSize)
         this.setDefaultFontSize(fontSize)
       }
     },
@@ -76,7 +75,7 @@ export default {
       } else {
         this.themeList.forEach(theme => {
           this.rendition.themes.register(theme.name, theme.style)
-        });
+        })
         this.setDefaultTheme(defaultTheme)
         this.rendition.themes.select(defaultTheme)
       }
@@ -131,12 +130,27 @@ export default {
       this.setCurrentBook(this.book)
       this.initRendition()
       this.initGesture()
+      this.parseBook()
       this.book.ready.then(() => {
         return this.book.locations.generate(750 * (window.innerWidth / 375) *
           (getFontSize(this.fileName) / 16))
       }).then((locations) => {
         this.setBookAvailable(true)
         this.refreshLocation()
+      })
+    },
+    parseBook () {
+      this.book.loaded.cover.then(cover => {
+        this.book.archive.createUrl(cover).then(url => {
+          this.setCover(url)
+        })
+      })
+      this.book.loaded.metadata.then(metadata => {
+        this.setMetadata(metadata)
+      })
+      this.book.loaded.navigation.then(nav => {
+        // this.setNavigation(nav)
+        console.log(nav)
       })
     }
   },
